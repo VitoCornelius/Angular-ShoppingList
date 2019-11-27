@@ -19,4 +19,12 @@ export class ShoppingListService {
         this.ingredientsChanged.emit(this.ingredients.slice());
     }
 
+    onIngredientsAdded(ingredients : Ingredient[]){
+        // for (let ingredient of ingredients){
+        //     this.onIngredientAdded(ingredient); //this will emit a lot of events emissions 
+        // }
+        this.ingredients.push(...ingredients); //spread the ingredients into the list of single ingredients 
+        this.ingredientsChanged.emit(this.ingredients.slice());
+    }
+
 }
