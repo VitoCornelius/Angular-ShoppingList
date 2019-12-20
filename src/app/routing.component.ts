@@ -5,13 +5,16 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { RecipeDetailComponent } from './recipes/recipe-detail/recipe-detail.component';
 import { RecipeStartComponent } from './recipes/recipe-start/recipe-start.component';
+import { RecipeAddedComponent } from './recipes/recipe-added/recipe-added.component';
  
 const applicationRoutes : Routes = [
     {path : '', redirectTo : '/recipes', pathMatch : 'full'},
     {path : 'recipes', component : RecipesComponent, 
     children : [
         {path : '', component : RecipeStartComponent}, //the initial 
-        {path : ':id', component : RecipeDetailComponent}
+        {path : 'new', component : RecipeAddedComponent}, //creating the new component
+        {path : ':id', component : RecipeDetailComponent}, //dynamic parameters shall be loaded last 
+        {path : ':id/edit', component : RecipeAddedComponent}  //edit mode for the existing recipe
     ]},
     {path : 'shopping-list', component : ShoppingListComponent},
 ];
