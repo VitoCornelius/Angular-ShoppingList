@@ -21,10 +21,11 @@
         class="form-control" 
         ngModel
         required
+        [pattern]="'^[1-9]+[0-9]*$'" 
         >
       </div>
       <div class="col-sm-12">
-          <button class="btn btn-success" type="submit">Add</button>
+          <button class="btn btn-success" type="submit" [disabled]="!f.valid">Add</button>
           <button class="btn btn-danger" type="button"  (click)="deleteIngredients()">Delete</button>
           <button class="btn btn-primary" type="button" (click)="clearIngredients()">Clear</button>
       </div>
