@@ -52,12 +52,15 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
     
   }
 
-  // deleteIngredients(){
-  //   this.shoppingListService.deleteIngredients(new Ingredient(this.signupForm.value.name, this.signupForm.value.amount))
-  // }
+  onClear() {
+    this.signupForm.reset();
+    this.editMode = false;
+  }
 
-  // clearIngredients(){
-  //   this.shoppingListService.clearAllIngredients();
-  // }
-
+  deleteItem(){
+    if(this.editMode){
+      this.shoppingListService.deleteIngredients(this.editedItemIndex);
+    }
+    this.editMode = false;
+  }
 }
