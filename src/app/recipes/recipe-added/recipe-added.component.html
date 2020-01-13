@@ -51,19 +51,25 @@
 
       
       <div class="row">
-        <div class="col-xs-12 form-group">
-          <div class="row">
+        <div class="col-xs-12 form-group" formArrayName="ingredients">
+
+          <div 
+          class="row" 
+          *ngFor="let ingredientCtrl of getControls(); let i = index"
+          [formGroupName]="i">
             <div class="col-xs-8">
               <input 
               type="text"
-              id="imagePath"
-              class="form-control">
+              id="name"
+              class="form-control"
+              formControlName="name">
             </div>
             <div class="col-xs-2">
               <input 
               type="text"
               id="amount"
-              class="form-control">
+              class="form-control"
+              formControlName="amount">
             </div>
             <div class="col-xs-2">
               <button class="btn btn-danger">Delete</button>
