@@ -65,7 +65,20 @@ export class RecipeAddedComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.recipeForm);
+    // const recipe = new Recipe(
+    //   this.recipeForm.value['name'],
+    //   this.recipeForm.value['description'],
+    //   this.recipeForm.value['imagePath'],
+    //   this.recipeForm.value['ingredients']
+    // );
+
+    //no need to create an object, the form object should have all the values
+
+    if (this.editMode){
+      this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+    } else {
+      this.recipeService.addReicpe(this.recipeForm.value);
+    }
   }
 
   onAddIngredient(){
