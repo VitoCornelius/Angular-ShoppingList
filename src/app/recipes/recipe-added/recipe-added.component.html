@@ -90,7 +90,7 @@
 
       <div class="row" style="margin-top: 10px;">
         <div class="col-xs-12 form-group">
-            <button type="submit" class="btn btn-success btn-block">Save</button>
+            <button type="submit" class="btn btn-success btn-block" [disabled]="!recipeForm.valid">Save</button>
             <button type="button" class="btn btn-danger btn-block">Clear</button>
         </div>
       </div>
