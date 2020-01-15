@@ -99,4 +99,8 @@ export class RecipeAddedComponent implements OnInit {
     this.router.navigate(['../'], {relativeTo : this.route}); //navigate UP , need a router and activated route 
   }
 
+  onDeleteIngredient(index : number) {
+    (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
+  }
+
 }
