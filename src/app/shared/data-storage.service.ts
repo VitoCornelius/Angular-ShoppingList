@@ -15,4 +15,11 @@ export class DataStorageService {
         });
     }
 
+    fetchRecipes() {
+        this.http.get<Recipe[]>('https://recipes-cf161.firebaseio.com/recipes.json').subscribe(recipes => {
+            this.recipeService.setRecipes(recipes);
+        })
+    }
+
+
 }
