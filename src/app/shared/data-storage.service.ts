@@ -20,21 +20,18 @@ export class DataStorageService {
     }
 
     fetchRecipes(){
-        return this.authService.user.pipe(
-            take(1), 
-            exhaustMap(user => { //replace the observable with the new one with this function
-                return this.http.get<Recipe[]>(
-                    'https://recipes-cf161.firebaseio.com/recipes.json', {params : new HttpParams().set('auth', user.token)}
+            return this.http.get<Recipe[]>(
+                    'https://recipes-cf161.firebaseio.com/recipes.json'
+                ).pipe(
+                map(recipes => {
+                    return recipes.map(recipe => {
+                        return { ...recipe, ingredients: recipe.ingredients ? recipe.ingredients : [] }
+                    });
+                }), 
+                tap(resipes => {
+                    this.recipeService.setRecipes(resipes);
+                })
                 )
-            }) , 
-            map(recipes => {
-                return recipes.map(recipe => {
-                    return { ...recipe, ingredients: recipe.ingredients ? recipe.ingredients : [] }
-                });
-            }), 
-            tap(resipes => {
-                this.recipeService.setRecipes(resipes);
-            })
-            ) //I only want to take one value and the unsubscribe immediately  
+             //I only want to take one value and the unsubscribe immediately  
     }
 }
