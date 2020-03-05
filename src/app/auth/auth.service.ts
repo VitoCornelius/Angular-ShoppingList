@@ -45,6 +45,23 @@ export class AuthService {
         }));
     }
 
+    autoLogin() {
+        const userData : {
+            email : string, 
+            id : string,  
+            _token : string,
+             _tokenExpirationDate : string
+            } = JSON.parse(localStorage.getItem('token')); // convert in the simple object 
+        if (!userData) {
+            return;
+        }
+
+        const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+        if (loadedUser.token) {
+            this.user.next(loadedUser);
+        }
+    }
+
     logout() {
         this.user.next(null); //set the user to null 
         this.router.navigate(['/auth']);
@@ -54,6 +71,8 @@ export class AuthService {
         const expirationTime = new Date(new Date().getTime() + expiredIn + 1000);
         const user = new User(email, id, token, expirationTime);
         this.user.next(user); //emit as the now logged user 
+
+        localStorage.setItem('token', JSON.stringify(user)); //save the token in the local storage -> convert the JS object to the string 
     }
 
     private handleError(errorResponse : HttpErrorResponse) {
