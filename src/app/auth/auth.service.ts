@@ -19,6 +19,7 @@ export interface AuthResponseData {
 export class AuthService {
 
     user = new BehaviorSubject<User>(null); //Events when the new user is logged in 
+    private tokenExpirationTimer : any = null;//save the timer in the variable 
 
     constructor(private httpClient : HttpClient, private router : Router){}
 
@@ -59,18 +60,33 @@ export class AuthService {
         const loadedUser = new User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
         if (loadedUser.token) {
             this.user.next(loadedUser);
+            const expirationDuration = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+            this.autoLogout(expirationDuration);
         }
+    }
+
+    autoLogout(expirationDuration : number) {
+        this.tokenExpirationTimer = setTimeout(  //get the reference to the timer
+            () => { this.logout();
+        }, expirationDuration);
     }
 
     logout() {
         this.user.next(null); //set the user to null 
         this.router.navigate(['/auth']);
+
+        localStorage.removeItem('token');
+        if (this.tokenExpirationTimer) {
+            clearTimeout(this.tokenExpirationTimer); //clear the timer 
+        }
+        this.tokenExpirationTimer = null;
     }
 
     private handleAuthentication(email : string, id : string, token : string, expiredIn : number){
         const expirationTime = new Date(new Date().getTime() + expiredIn + 1000);
         const user = new User(email, id, token, expirationTime);
         this.user.next(user); //emit as the now logged user 
+        this.autoLogout(expiredIn * 1000);
 
         localStorage.setItem('token', JSON.stringify(user)); //save the token in the local storage -> convert the JS object to the string 
     }
