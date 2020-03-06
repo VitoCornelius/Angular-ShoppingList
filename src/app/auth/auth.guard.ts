@@ -1,0 +1,27 @@
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, UrlTree } from "@angular/router";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { AuthService } from "./auth.service";
+import { map, tap, take } from "rxjs/operators";
+
+@Injectable({providedIn : 'root'})
+export class AuthGuard implements CanActivate {
+
+    constructor(private authService : AuthService, private router : Router){}
+
+    //we can do the same with yielding the UrlTree, because there may be some problems with concurrency 
+
+    canActivate(route : ActivatedRouteSnapshot, router : RouterStateSnapshot) : 
+        boolean | Promise<boolean> | Observable<boolean> { 
+        return this.authService.user.pipe(
+            take(1), // we do not want to have the ongoing subscription !! 
+            map(user => {
+                return !!user;
+            }), tap(isAuth => {
+                if (!isAuth) {
+                    this.router.navigate(['/auth']);
+                }
+            })
+        ); //trick the return the true value if the object exists 
+    } 
+}
