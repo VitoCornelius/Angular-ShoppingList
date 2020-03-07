@@ -19,6 +19,10 @@ export class AuthComponent {
         this.isLoginMode = !this.isLoginMode;
     }
 
+    onHandleError() {
+        this.error = null; //the condition for displaying the error will be removed so the alert will be closed 
+    }
+
     onSubmit(form : NgForm) {
         if (!form.valid){
             return;
