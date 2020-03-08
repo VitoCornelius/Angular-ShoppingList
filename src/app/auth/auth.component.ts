@@ -1,8 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, ComponentFactoryResolver, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { AuthService, AuthResponseData } from "./auth.service";
 import { Observable } from "rxjs";
 import { Router } from "@angular/router";
+import { AlertComponent } from "../shared/alert/alert.component";
+import { PlaceholderDirective } from "../shared/placeholder/placeholder.directive";
 
 @Component({
     selector : 'app-auth',
@@ -13,7 +15,14 @@ export class AuthComponent {
     isLoading = false;
     error : string = null;
 
-    constructor(private authService : AuthService, private router : Router ) {}
+    //this will automaticaly search for the first occurence of the directive in the DOM
+    @ViewChild(PlaceholderDirective) alertHost : PlaceholderDirective;
+
+    constructor(
+        private authService : AuthService, 
+        private router : Router, 
+        private componentFactoryResolver : ComponentFactoryResolver
+    ) {}
 
     onSwitchMode() {
         this.isLoginMode = !this.isLoginMode;
@@ -44,14 +53,24 @@ export class AuthComponent {
             this.isLoading = false;
             this.error = null;
             this.router.navigate(['/recipes']);
-        }, error1 => {
-            console.log(error1);
+        }, errorMessage => {
+            console.log(errorMessage);
             this.isLoading = false;
-            this.error = error1;
+            this.error = errorMessage;
+            this.showErrorAlert(errorMessage);
         }
         );
         console.log(form.value);
 
         form.reset();
+    }
+
+    private showErrorAlert(message : string) {
+        //const alertComponent = new AlertComponent(); //this will not work with angular 
+        const alertComponentFactory = this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+        const hostViewContainerRef = this.alertHost.viewContainerRef;
+        hostViewContainerRef.clear(); //clear all the things that have been there
+        
+        hostViewContainerRef.createComponent(alertComponentFactory);
     }
 }
