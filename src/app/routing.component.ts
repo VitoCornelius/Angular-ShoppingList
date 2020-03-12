@@ -12,13 +12,6 @@ import { AuthGuard } from './auth/auth.guard';
  
 const applicationRoutes : Routes = [
     {path : '', redirectTo : '/recipes', pathMatch : 'full'},
-    {path : 'recipes', component : RecipesComponent, canActivate : [AuthGuard],
-    children : [
-        {path : '', component : RecipeStartComponent}, //the initial 
-        {path : 'new', component : RecipeAddedComponent}, //creating the new component
-        {path : ':id', component : RecipeDetailComponent, resolve : [RecipesResolverService]}, //dynamic parameters shall be loaded last 
-        {path : ':id/edit', component : RecipeAddedComponent, resolve : [RecipesResolverService]}  //edit mode for the existing recipe
-    ]},
     {path : 'shopping-list', component : ShoppingListComponent},
     {path : 'auth', component : AuthComponent}
 ];

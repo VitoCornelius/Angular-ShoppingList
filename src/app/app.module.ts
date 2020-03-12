@@ -37,7 +37,7 @@ import { RecipesModule } from './recipes/recipes.module';
     FormsModule,
     HttpClientModule , //we need to add the http client 
     ReactiveFormsModule,
-    RecipesModule
+    RecipesModule //this will also contain the recipes routes 
   ],
   providers: [ShoppingListService, RecipeService, {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptorService, multi : true}],
   bootstrap: [AppComponent],
