@@ -20,14 +20,7 @@ import { RecipesRoutingModule } from "./recipes.routing.module";
         RecipeStartComponent,
         RecipeAddedComponent
     ] , 
-    exports : [ //export all so that they are used in the next module
-        RecipesComponent,
-        RecipeListComponent,
-        RecipeDetailComponent,
-        RecipeItemComponent,
-        RecipeStartComponent,
-        RecipeAddedComponent
-    ], imports : [
+    imports : [
         RouterModule, 
         CommonModule, //use the common module instead of BrowerModule 
         ReactiveFormsModule,
