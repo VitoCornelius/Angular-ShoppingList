@@ -15,24 +15,24 @@ import { AlertComponent } from './shared/alert/alert.component';
 import { RecipesModule } from './recipes/recipes.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    AuthComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     RoutingComponent, //this should be named module 
-    FormsModule,
     HttpClientModule , //we need to add the http client 
-    ReactiveFormsModule,
     RecipesModule, //this will also contain the recipes routes 
     ShoppingListModule,
-    SharedModule
+    SharedModule,
+    AuthModule
   ],
   providers: [ShoppingListService, RecipeService, {provide : HTTP_INTERCEPTORS, useClass : AuthInterceptorService, multi : true}],
+    //we can place this in a separate module -> but it is generally better to keep the annotation providedin instead of placing it here 
   bootstrap: [AppComponent],
   entryComponents : [ //the components that will be eventually created programatically 
     AlertComponent
