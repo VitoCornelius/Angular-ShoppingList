@@ -1,4 +1,4 @@
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 const applicationRoutes : Routes = [
@@ -9,7 +9,8 @@ const applicationRoutes : Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(applicationRoutes)
+        RouterModule.forRoot(applicationRoutes, {preloadingStrategy : PreloadAllModules}) //this will preload the bundles as soon as possible.
+        //The initial bundle is still kept small. Fast initial load and fast subsequent load 
     ],
     exports : [RouterModule]
 })
