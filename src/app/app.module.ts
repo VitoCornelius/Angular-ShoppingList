@@ -7,12 +7,9 @@ import { HeaderComponent } from './header/header.component';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { RoutingComponent } from './routing.component';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RecipeService } from './recipes/recipe.service';
-import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AlertComponent } from './shared/alert/alert.component';
-import { RecipesModule } from './recipes/recipes.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
 import { AuthModule } from './auth/auth.module';
@@ -26,7 +23,6 @@ import { AuthModule } from './auth/auth.module';
     BrowserModule,
     RoutingComponent, //this should be named module 
     HttpClientModule , //we need to add the http client 
-    RecipesModule, //this will also contain the recipes routes 
     ShoppingListModule,
     SharedModule,
     AuthModule
